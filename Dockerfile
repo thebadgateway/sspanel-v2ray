@@ -6,7 +6,7 @@ ENV v2ray_version=4.18.5
 
 RUN apt-get update
 RUN apt-get install curl -y
-RUN curl -L -o /tmp/go.sh https://raw.githubusercontent.com/marisn2017/sspanel-v2ray/master/install-release.sh?token=AJKMZDLDYYC2GJDSL5UPJE25F2K66
+RUN curl -L -o /tmp/go.sh https://raw.githubusercontent.com/marisn2017/sspanel-v2ray/master/install-release.sh
 RUN chmod +x /tmp/go.sh
 RUN /tmp/go.sh --version ${v2ray_version} --panelurl https://google.com --panelkey 55fUxDGFzH3n --nodeid 123456 --downwithpanel 1 --mysqlhost https://bing.com --mysqldbname demo_dbname --mysqluser demo_user --mysqlpasswd demo_dbpassword --mysqlport 3306 --speedtestrate 6 --paneltype 0 --usemysql 0
 
