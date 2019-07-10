@@ -1,0 +1,130 @@
+{ "dns": {
+  "servers": [
+    "1.1.1.1",
+    "8.8.8.8"
+  ]
+},
+  "api": {
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService",
+      "RuleService"
+    ],
+    "tag": "api"
+  },
+  "inbounds": [{
+    "listen": "127.0.0.1",
+    "port": 2333,
+    "protocol": "dokodemo-door",
+    "settings": {
+      "address": "127.0.0.1"
+    },
+    "tag": "api"
+  }
+  ],
+  "log": {
+    "loglevel": "info"
+  },
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {
+      "domainStrategy": "UseIP"
+    }
+  },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }, {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blockedapi"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "0": {
+        "connIdle": 300,
+        "downlinkOnly": 5,
+        "handshake": 4,
+        "statsUserDownlink": true,
+        "statsUserUplink": true,
+        "uplinkOnly": 2
+      }
+    },
+    "system": {
+      "statsInboundDownlink": false,
+      "statsInboundUplink": false
+    }
+  },
+  "reverse": {},
+  "routing": {
+    "rules": [{
+      "ip": [
+        "0.0.0.0/8",
+        "10.0.0.0/8",
+        "100.64.0.0/10",
+        "127.0.0.0/8",
+        "169.254.0.0/16",
+        "172.16.0.0/12",
+        "192.0.0.0/24",
+        "192.0.2.0/24",
+        "192.168.0.0/16",
+        "198.18.0.0/15",
+        "198.51.100.0/24",
+        "203.0.113.0/24",
+        "::1/128",
+        "fc00::/7",
+        "fe80::/10"
+      ],
+      "outboundTag": "blocked",
+      "protocol": [
+        "bittorrent"
+      ],
+      "type": "field"
+    },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      },
+      {
+        "domain": [
+          "regexp:(api|ps|sv|offnavi|newvector|ulog\\.imap|newloc)(\\.map|)\\.(baidu|n\\.shifen)\\.com",
+          "regexp:(.+\\.|^)(360|so)\\.(cn|com)",
+          "regexp:(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)"
+        ],
+        "outboundTag": "blocked",
+        "type": "field"
+      }
+    ],
+    "domainStrategy": "AsIs"
+  },
+  "stats": {},
+  "sspanel": {
+    "nodeid": 123456,
+    "checkRate": 60,
+    "SpeedTestCheckRate": 6,
+    "panelUrl": "https://google.com",
+    "panelKey": "55fUxDGFzH3n",
+    "downWithPanel": 1,
+    "mu_regex":  "%5m%id.%suffix",
+    "mu_suffix": "microsoft.com",
+    "mysql": {
+      "host": "https://bing.com",
+      "port": 3306,
+      "user": "demo_user",
+      "password": "demo_dbpassword",
+      "dbname": "demo_dbname"
+    },
+    "paneltype": 0,
+    "usemysql": 0,
+    "go_panel_host": "bwg.com",
+    "go_panel_key": "bbbbaaaaaaa",
+    "cf_key": "bbbbbbbbbbbbbbbbbb",
+    "cf_email": "rico93@outlxxxxxxxxxx.com"
+  }
+}
